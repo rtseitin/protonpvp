@@ -5,8 +5,6 @@ import { IServerConfigurationType } from 'src/config';
 import statusRoute from '../routes/status';
 import staffRoute from '../routes/staff';
 import cors from 'cors';
-
-
 export class ServerService {
     private _serverConfig: IServerConfigurationType;
     private NAMESPACE: string = 'Server';

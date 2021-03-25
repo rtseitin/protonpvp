@@ -61,7 +61,7 @@ const addRole = async (req: Request, res: Response, next: NextFunction) => {
         message: 'Please define the UUID and rank body property!'
     });
 
-    const user: IStaff = await Staff.findOne({ UUID: UUID.toString().replace(/-/g, '') });
+    const user: IStaff | null = await Staff.findOne({ UUID: UUID.toString().replace(/-/g, '') });
     if (!user) return res.status(409).json({
         error: true,
         message: 'Staff member could not be found.'
@@ -94,7 +94,7 @@ const removeRole = async (req: Request, res: Response, next: NextFunction) => {
         message: 'Please define the UUID and rank body property!'
     });
 
-    const user: IStaff = await Staff.findOne({ UUID: UUID.toString().replace(/-/g, '') });
+    const user: IStaff | null = await Staff.findOne({ UUID: UUID.toString().replace(/-/g, '') });
     if (!user) return res.status(409).json({
         error: true,
         message: 'Staff member could not be found.'
@@ -162,6 +162,7 @@ const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
 
 const getAllStaffWebsite = async (req: Request, res: Response, next: NextFunction) => {
     const response: any = [];
+    // @ts-ignore
     await Rank.find({}).exec().then(async (docs, err) => {
         let sortable: Array<Array<any>> = [];
 
@@ -170,7 +171,7 @@ const getAllStaffWebsite = async (req: Request, res: Response, next: NextFunctio
             message: err
         });
 
-        docs.forEach((rank) => {
+        docs.forEach((rank: { name: any; priority: any; }) => {
             sortable.push([rank.name, rank.priority]);
         });
 
