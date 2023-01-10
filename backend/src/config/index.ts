@@ -18,7 +18,7 @@ export interface IServerConfigurationType {
 export const DatabaseConfiguration: IDatabaseConfigurationType = {
     databaseDetails: {
         dbAddress: process.env.DB_ADDRESS,
-        dbName: process.env.DN_NAME,
+        dbName: process.env.DB_NAME,
         dbUsername: '',
         dbPassword: ''
     },

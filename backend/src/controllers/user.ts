@@ -7,8 +7,7 @@ import IStaff from "src/interfaces/staff";
 
 const createUser = (req: Request, res: Response, next: NextFunction) => {
     let { UUID } = req.body;
-
-    axios.get(`https://api.mojang.com/user/profiles/${UUID}/names`)
+    axios.get(`https://sessionserver.mojang.com/session/minecraft/profile/${UUID}`)
         .then((response) => {
             if (response.status == 204) return res.status(500).json({
                 error: true,
@@ -186,8 +185,9 @@ const getAllStaffWebsite = async (req: Request, res: Response, next: NextFunctio
         for (let i = 0; i < response.length; i++) {
             await Staff.find({ ranks: response[i]['rank'] }).then(async (staffs) => {
                 for (let j = 0; j < staffs.length; j++) {
-                    await axios.get(`https://api.mojang.com/user/profiles/${staffs[j].UUID}/names`).then((username) => {
-                        response[i]['players'].push({ uuid: staffs[j].UUID, name: username.data[username.data.length - 1]['name'] });
+                    // https://sessionserver.mojang.com/session/minecraft/profile/${UUID}
+                    await axios.get(`https://sessionserver.mojang.com/session/minecraft/profile/${staffs[j].UUID}`).then((res) => {
+                        response[i]['players'].push({ uuid: staffs[j].UUID, name: res.data?.name });
                     });
                 }
             });

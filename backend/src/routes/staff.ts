@@ -6,12 +6,14 @@ import userController from '../controllers/user';
 const router = express.Router();
 
 router.use((req, res, next) => {
+    if (req.method === "GET" && req.path === "/users/website") return next();
+
     if (!req.headers.authorization) return res.status(401).json({
         error: true,
         message: 'Authorization header undefined.'
     });
 
-    if (req.headers.authorization !== 'qR:zt;5h%^') return res.status(403).json({
+    if (req.headers.authorization !== process.env.AUTH_KEY) return res.status(403).json({
         error: true,
         message: 'Authorization invalid, please try again.'
     });
