@@ -1,0 +1,11 @@
+p.tag {
+    color: darkgray;
+    text-decoration: none;
+    margin: 0.5em;
+}
+  
+p.tag:hover {
+    cursor: pointer;
+    color: #ffffff;
+}
+
